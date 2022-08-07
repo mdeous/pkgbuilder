@@ -41,8 +41,10 @@ jobs:
         uses: docker/metadata-action@v4.0.1
         with:
           images: |
-            mdeous/pkgbuilder:latest
-            ghcr.io/mdeous/pkgbuilder:latest
+            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable=true
 
       - name: Build and push image
         uses: docker/build-push-action@v3.1.1
