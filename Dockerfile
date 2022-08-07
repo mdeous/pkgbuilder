@@ -3,7 +3,7 @@ FROM archlinux:base-devel
 # set build folder
 WORKDIR /pkg
 ENV PKGDEST /pkg
-ENV SRCDIR /tmp
+ENV SRCDEST /tmp
 
 # create pkgbuilder user
 RUN useradd -m -g wheel -s /bin/sh pkgbuilder && \
