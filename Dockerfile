@@ -20,5 +20,5 @@ RUN pacman -Sy --noconfirm && \
     find /var/cache/pacman/ -type f -delete
 
 USER pkgbuilder
-ENTRYPOINT ["makepkg", "--cleanbuild", "--force", "--noconfirm", "--syncdeps"]
+ENTRYPOINT ["makepkg", "--clean", "--cleanbuild", "--force", "--noconfirm", "--syncdeps"]
 CMD []
