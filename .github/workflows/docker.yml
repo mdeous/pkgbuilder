@@ -21,9 +21,9 @@ jobs:
           - docker.io
         include:
           - registry: ghcr.io
-            secret: ${{ secrets.GITHUB_TOKEN }}
+            secret: GITHUB_TOKEN
           - registry: docker.io
-            secret: ${{ secrets.DOCKER_TOKEN }}
+            secret: DOCKER_TOKEN
     
     steps:
       - name: Checkout repository
@@ -34,7 +34,7 @@ jobs:
         with:
           registry: ${{ matrix.registry }}
           username: ${{ github.repository_owner }}
-          password: ${{ matrix.secret }}
+          password: ${{ secrets[matrix.secret] }}
       
       - name: Extract image metadata
         id: meta
