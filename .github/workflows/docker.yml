@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  IMAGE_NAME: mdeous/pkgbuilder
+
 jobs:
   release:
     name: Build and release Docker image
@@ -41,8 +44,8 @@ jobs:
         uses: docker/metadata-action@v4.0.1
         with:
           images: |
-            ${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:latest
+            ${IMAGE_NAME}:latest
+            ghcr.io/${IMAGE_NAME}:latest
 
       - name: Build and push image
         uses: docker/build-push-action@v3.1.1
