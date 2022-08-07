@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 0 * * 0'
 
 jobs:
   release:
@@ -41,8 +43,7 @@ jobs:
         uses: docker/metadata-action@v4.0.1
         with:
           images: |
-            ${{ github.repository }}
-            ghcr.io/${{ github.repository }}
+            ${{ matrix.registry }}/${{ github.repository }}
           tags: |
             type=raw,value=latest,enable=true
 
