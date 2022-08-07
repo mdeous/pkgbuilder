@@ -41,8 +41,8 @@ jobs:
         uses: docker/metadata-action@v4.0.1
         with:
           images: |
-            ${{ github.repository }}
-            ghcr.io/${{ github.repository }}
+            ${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:latest
 
       - name: Build and push image
         uses: docker/build-push-action@v3.1.1
