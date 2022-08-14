@@ -22,6 +22,10 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
 
+    permissions:
+      packages: read
+      contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
