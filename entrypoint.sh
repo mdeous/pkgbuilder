@@ -1,12 +1,21 @@
 #!/bin/bash
 
 function build {
-    # install dependencies and build package
+    # read package metadata
+    local srcinfo=$(makepkg --printsrcinfo)
+    # install missing PGP keys
+    sudo pacman-key --recv-keys $(\
+        echo ${srcinfo} | \
+        grep validpgpkeys | \
+        awk '{print $3}' \
+    )
+    # install dependencies
     yay -S --noconfirm $(\
-        makepkg --printsrcinfo | \
+        echo ${srcinfo} | \
         grep -E '\b(make)?depends' | \
         awk '{print $3}'\
     )
+    # build package
     makepkg --clean --cleanbuild --force --noconfirm $@
 }
 
