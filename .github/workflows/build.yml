@@ -53,6 +53,7 @@ jobs:
 
   test:
     name: Test Image
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download image archive
