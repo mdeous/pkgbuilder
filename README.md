@@ -7,7 +7,7 @@ on the official `archlinux:basee-devel` image, and can be used for example to
 work on packages without having to install dependencies on the host system.
 
 It can handle dependencies coming both from the official repositories and
-from AUR.
+from AUR, as well as importing PGP keys listed in `validpgpkeys` .
 
 ## Usage
 
