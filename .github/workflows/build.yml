@@ -32,10 +32,39 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-          install: true
-      
       - name: Build image
-        run: docker build --pull --cache-from ghcr.io/mdeous/pkgbuilder:latest -t pkgbuilder .
+        uses: docker/build-push-action@v3.1.1
+        with:
+          pull: true
+          push: false
+          tags: pkgbuilder:latest
+          outputs: type=docker,dest=/tmp/image.tar
+      
+      - name: Upload image archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: pkgbuilder-image
+          path: /tmp/image.tar
+
+  test:
+    name: Test Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download image archive
+        uses: actions/download-artifact@v3
+        with:
+          name: pkgbuilder-image
+          path: /tmp/image.tar
+      
+      - name: Import image
+        run: docker load --input /tmp/image.tar
+      
+      - name: Checkout yay repository
+        uses: actions/checkout@v3
+        with:
+          repository: https://github.com/Jguer/yay
+      
+      - name: Build yay package
+        run: |
+          cd yay
+          docker run --rm -v "${PWD}:/pkg" pkgbuilder:latest
