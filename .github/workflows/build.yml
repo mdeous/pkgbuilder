@@ -17,10 +17,6 @@ on:
     - cron: '0 0 * * 0'
   workflow_dispatch:
 
-env:
-  LATEST_IMAGE: ghcr.io/${{ github.repository_owner }}/pkgbuilder:latest
-  CI_IMAGE: pkgbuilder:ci
-
 jobs:
   build:
     name: Build Image
@@ -47,8 +43,8 @@ jobs:
         with:
           pull: true
           push: false
-          cache-from: ${LATEST_IMAGE}
-          tags: ${CI_IMAGE}
+          cache-from: ghcr.io/${{ github.repository_owner }}/pkgbuilder:latest
+          tags: pkgbuilder:ci
           outputs: type=docker,dest=/tmp/image.tar
       
       - name: Upload image archive
@@ -80,7 +76,7 @@ jobs:
       - name: Build yay package
         run: |
           cd yay
-          docker run --rm -v "${PWD}:/pkg" ${CI_IMAGE}
+          docker run --rm -v "${PWD}:/pkg" pkgbuilder:ci
 
   publish:
     name: Publish Image
@@ -128,6 +124,6 @@ jobs:
         with:
           pull: true
           push: true
-          cache-from: ${LATEST_IMAGE}
+          cache-from: ghcr.io/${{ github.repository_owner }}/pkgbuilder:latest
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
