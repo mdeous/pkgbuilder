@@ -2,23 +2,41 @@
 
 Docker based ArchLinux build environment.
 
-## Introduction
+This image provides a build environment for ArchLinux packages. It is based
+on the official `archlinux:basee-devel` image, and can be used for example to
+work on packages without having to install dependencies on the host system.
 
-This docker image provides a minimal ArchLinux package build environment to build packages custom `PKGBUILD` files.
-It can be useful to find dependencies missing from the `PKGBUILD` that might already be installed on the host machine.
-
-Unde the hood, the package is built using `makepkg -scCf --noconfirm`.
+It can handle dependencies coming both from the official repositories and
+from AUR.
 
 ## Usage
 
-Run the `pkgbuilder` image with the folder containing your `PKGBUILD` file mounted on the container's `/pkg` folder:
+Run the image with the folder containing your `PKGBUILD` file mounted on the
+container's `/pkg` folder:
 
 ```shell
-docker run --rm -v "$(pwd):/pkg" mdeous/pkgbuilder
+docker run -it --rm -v "$(pwd):/pkg" mdeous/pkgbuilder [build|makepkg] [ARGS]
 ```
 
-Additional arguments can be passed to `makepkg`, for example to display the content of the `.SRCINFO` file in order to upload the package to AUR:
+* `build`: the container will install all the build dependencies using
+[`yay`](https://github.com/Jguer/yay), and will then build the package
+using `makepkg --clean --cleanbuild --force --noconfirm`. Any additional
+arguments will be added to the call to `makepkg`. The resulting built
+package will be stored alongside the `PKGBUILD` file.
 
-```shell
-docker run --rm -v "$(pwd):/pkg" mdeous/pkgbuilder --printsrcinfo
+* `makepkg`: the container will run `makepkg` directly and pass all
+remaining arguments to it. This can be useful to run `makepkg` commands
+that don't require dependencies to be installed, like for example to
+show the package `.SRCINFO` content, or to compute dependencies checksums.
+
+* If neither `build` nor `makepkg` is passed, the container will run the
+`build` and pass all additional arguments to it.
+
+### Shell Alias
+
+To avoid having to type that long command line to run the container every
+time, the following shell alias can be used:
+
+```bash
+docker run -it --rm --name="pkgbuilder-$(basename ${PWD})" -v "${PWD}":/pkg mdeous/pkgbuilder:latest $@
 ```
