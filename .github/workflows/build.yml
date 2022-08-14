@@ -81,3 +81,53 @@ jobs:
         run: |
           cd yay
           docker run --rm -v "${PWD}:/pkg" ${CI_IMAGE}
+
+  publish:
+    name: Publish Image
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+      contents: read
+
+    strategy:
+      matrix:
+        registry:
+          - ghcr.io
+          - docker.io
+        include:
+          - registry: ghcr.io
+            secret: GITHUB_TOKEN
+          - registry: docker.io
+            secret: DOCKER_TOKEN
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Log into Docker registry
+        uses: docker/login-action@v2.0.0
+        with:
+          registry: ${{ matrix.registry }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets[matrix.secret] }}
+      
+      - name: Extract image metadata
+        id: meta
+        uses: docker/metadata-action@v4.0.1
+        with:
+          images: |
+            ${{ matrix.registry }}/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable=true
+
+      - name: Build and push image
+        uses: docker/build-push-action@v3.1.1
+        with:
+          pull: true
+          push: true
+          cache-from: ${LATEST_IMAGE}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
