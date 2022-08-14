@@ -33,4 +33,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build image
-        run: docker build --pull --cache-from ghcr.io/mdeous/pkgbuilder:latest -t pkgbuilder .
+        run: docker buildx --pull --cache-from ghcr.io/mdeous/pkgbuilder:latest -t pkgbuilder .
