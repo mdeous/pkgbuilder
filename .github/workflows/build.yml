@@ -32,5 +32,8 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v2
+      
       - name: Build image
         run: docker buildx --pull --cache-from ghcr.io/mdeous/pkgbuilder:latest -t pkgbuilder .
