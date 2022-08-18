@@ -54,8 +54,8 @@ jobs:
         with:
           pull: true
           push: false
-          cache-from: ghcr.io/${LATEST_TAG}
-          tags: ${CI_TAG}
+          cache-from: ghcr.io/${{ env.LATEST_TAG }}
+          tags: ${{ env.CI_TAG }}
           outputs: type=docker,dest=/tmp/image.tar
       
       - name: Upload image archive
