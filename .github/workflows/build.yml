@@ -20,7 +20,6 @@ on:
 env:
   LATEST_TAG: mdeous/pkgbuilder:latest
   CI_TAG: pkgbuilder:ci
-  CI_IMAGE_PATH: /tmp/image.tar
 
 jobs:
   build:
@@ -34,6 +33,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      
+      - name: Log into GitHub container registry
+        uses: docker/login-action@v2.0.0
+        with:
+          registry: ghcr.io
+          username: mdeous
+          password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -50,13 +56,13 @@ jobs:
           push: false
           cache-from: ghcr.io/${LATEST_TAG}
           tags: ${CI_TAG}
-          outputs: type=docker,dest=${CI_IMAGE_PATH}
+          outputs: type=docker,dest=/tmp/image.tar
       
       - name: Upload image archive
         uses: actions/upload-artifact@v3
         with:
           name: pkgbuilder-image
-          path: ${CI_IMAGE_PATH}
+          path: /tmp/image.tar
 
   publish:
     name: Publish Image
@@ -87,17 +93,17 @@ jobs:
           path: /tmp/
       
       - name: Import image
-        run: docker load --input ${CI_IMAGE_PATH}
+        run: docker load --input /tmp/image.tar
       
       - name: Log into Docker registry
         uses: docker/login-action@v2.0.0
         with:
           registry: ${{ matrix.registry }}
-          username: ${{ github.repository_owner }}
+          username: mdeous
           password: ${{ secrets[matrix.secret] }}
       
-      - name: Tag image
+      - name: Tag image with latest tag
         run: docker tag ${CI_TAG} ${{ matrix.registry }}/${LATEST_TAG}
       
-      - name: Push image
+      - name: Push image to container registry
         run: docker push ${{ matrix.registry }}/${LATEST_TAG}
