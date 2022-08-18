@@ -79,11 +79,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: Jguer/yay
-          path: yay
+          path: /tmp/yay
       
       - name: Build yay package
         run: |
-          cd yay
+          cd /tmp/yay
           docker run --rm -v "${PWD}:/pkg" pkgbuilder:ci
 
   publish:
