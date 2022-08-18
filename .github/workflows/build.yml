@@ -15,7 +15,6 @@ on:
       - entrypoint.sh
   schedule:
     - cron: '0 0 * * 0'
-  workflow_dispatch:
 
 env:
   LATEST_TAG: mdeous/pkgbuilder:latest
