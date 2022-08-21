@@ -9,11 +9,6 @@ function build {
     ); do
         sudo pacman-key --recv-keys "${key}"
     done
-    sudo pacman-key --recv-keys $(\
-        makepkg --printsrcinfo | \
-        grep validpgpkeys | \
-        awk '{print $3}' \
-    )
     # install dependencies
     yay -S --noconfirm $(\
         makepkg --printsrcinfo | \
