@@ -1,24 +1,22 @@
 #!/bin/bash
 
 function build {
-    # read package metadata
-    local srcinfo=$(makepkg --printsrcinfo)
     # install missing PGP keys
     for key in $(\
-        echo ${srcinfo} | \
+        makepkg --printsrcinfo | \
         grep validpgpkeys | \
         awk '{print $3}' \
     ); do
         sudo pacman-key --recv-keys "${key}"
     done
     sudo pacman-key --recv-keys $(\
-        echo ${srcinfo} | \
+        makepkg --printsrcinfo | \
         grep validpgpkeys | \
         awk '{print $3}' \
     )
     # install dependencies
     yay -S --noconfirm $(\
-        echo ${srcinfo} | \
+        makepkg --printsrcinfo | \
         grep -E '\b(make)?depends' | \
         awk '{print $3}'\
     )
