@@ -4,6 +4,13 @@ function build {
     # read package metadata
     local srcinfo=$(makepkg --printsrcinfo)
     # install missing PGP keys
+    for key in $(\
+        echo ${srcinfo} | \
+        grep validpgpkeys | \
+        awk '{print $3}' \
+    ); do
+        sudo pacman-key --recv-keys "${key}"
+    done
     sudo pacman-key --recv-keys $(\
         echo ${srcinfo} | \
         grep validpgpkeys | \
