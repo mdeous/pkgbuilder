@@ -1,3 +1,5 @@
+[![Build and ](https://github.com/mdeous/pkgbuilder/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mdeous/pkgbuilder/actions/workflows/build.yml)
+
 # pkgbuilder
 
 Docker based ArchLinux build environment.
@@ -38,5 +40,5 @@ To avoid having to type that long command line to run the container every
 time, the following shell alias can be used:
 
 ```bash
-docker run -it --rm --name="pkgbuilder-$(basename ${PWD})" -v "${PWD}":/pkg mdeous/pkgbuilder:latest $@
+alias pkgbuilder='docker run -it --rm --name="pkgbuilder-$(basename ${PWD})" -v "${PWD}":/pkg mdeous/pkgbuilder:latest'
 ```
