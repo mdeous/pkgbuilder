@@ -1,4 +1,4 @@
-[![Build and Publish](https://github.com/mdeous/pkgbuilder/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mdeous/pkgbuilder/actions/workflows/build.yml)
+[![Build](https://github.com/mdeous/pkgbuilder/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mdeous/pkgbuilder/actions/workflows/build.yml)
 
 # pkgbuilder
 
