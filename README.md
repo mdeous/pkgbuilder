@@ -32,7 +32,7 @@ that don't require dependencies to be installed, like for example to
 show the package `.SRCINFO` content, or to compute dependencies checksums.
 
 * If neither `build` nor `makepkg` is passed, the container will run the
-`build` and pass all additional arguments to it.
+`build` command and pass all additional arguments to it.
 
 ### Shell Alias
 
