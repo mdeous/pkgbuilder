@@ -10,9 +10,9 @@ function build {
         sudo pacman-key --recv-keys "${key}"
     done
     # update pacman cache
-    sudo pacman -Sy
+    sudo pacman -Syq
     # install dependencies
-    yay -S --noconfirm $(\
+    yay -Sq --noconfirm $(\
         makepkg --printsrcinfo | \
         grep -E '\b(make)?depends' | \
         awk '{print $3}'\
