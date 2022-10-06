@@ -34,6 +34,10 @@ show the package `.SRCINFO` content, or to compute dependencies checksums.
 * If neither `build` nor `makepkg` is passed, the container will run the
 `build` command and pass all additional arguments to it.
 
+The `.SRCINFO` file for the package can be automatically generated with
+the built package by passing a `SRCINFO=1` environment variable to the 
+container.
+
 ### Shell Alias
 
 To avoid having to type that long command line to run the container every

@@ -21,6 +21,7 @@ FROM archlinux:base-devel
 WORKDIR /pkg
 ENV PKGDEST /pkg
 ENV SRCDEST /tmp
+ENV SRCINFO 0
 
 # copy files from base stage
 COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/

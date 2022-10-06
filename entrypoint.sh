@@ -17,6 +17,10 @@ function build {
         grep -E '\b(make)?depends' | \
         awk '{print $3}'\
     )
+    # generate SRCINFO
+    if [ "${SRCINFO}" = "1" ]; then
+        makepkg --printsrcinfo > .SRCINFO
+    fi
     # build package
     makepkg --clean --cleanbuild --force --noconfirm $@
 }
