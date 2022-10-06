@@ -17,7 +17,7 @@ Run the image with the folder containing your `PKGBUILD` file mounted on the
 container's `/pkg` folder:
 
 ```shell
-docker run -it --rm -v "$(pwd):/pkg" mdeous/pkgbuilder [build|makepkg] [ARGS]
+docker run --rm -v "$(pwd):/pkg" mdeous/pkgbuilder [build|makepkg] [ARGS]
 ```
 
 * `build`: the container will install all the build dependencies using
@@ -40,5 +40,5 @@ To avoid having to type that long command line to run the container every
 time, the following shell alias can be used:
 
 ```bash
-alias pkgbuilder='docker run -it --rm --name="pkgbuilder-$(basename ${PWD})" -v "${PWD}":/pkg mdeous/pkgbuilder:latest'
+alias pkgbuilder='docker run --rm --name="pkgbuilder-$(basename ${PWD})" -v "${PWD}":/pkg mdeous/pkgbuilder:latest'
 ```
