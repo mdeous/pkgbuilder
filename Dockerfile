@@ -1,35 +1,28 @@
-# syntax=docker/dockerfile:1
 FROM archlinux:base-devel as base
 
 # create pkgbuilder user
 RUN useradd -m -g wheel -s /bin/sh pkgbuilder && \
     echo "pkgbuilder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# install git
-RUN pacman -Sy --noconfirm && \
-    pacman -S --noconfirm git glibc
-
 # install yay
+RUN pacman -Sy --noconfirm
 USER pkgbuilder
-RUN git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin && \
-    cd /tmp/yay-bin && \
+ADD --chown=pkgbuilder:wheel https://aur.archlinux.org/yay-bin.git#master /tmp/yay-bin/
+RUN cd /tmp/yay-bin && \
     makepkg -si --noconfirm
 
 FROM archlinux:base-devel
-
-# set build folder
-WORKDIR /pkg
 ENV PKGDEST /pkg
 ENV SRCDEST /tmp
 ENV SRCINFO 0
+
+# set build folder
+WORKDIR /pkg
 
 # copy files from base stage
 COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/
 COPY --from=base --chown=pkgbuilder:wheel /home/pkgbuilder /home/pkgbuilder
 COPY --from=base /usr/sbin/yay /usr/sbin/
-
-# copy entrypoint script
-COPY --link entrypoint.sh /
 
 # install dependencies for version-controlled packagees
 RUN pacman -Sy --noconfirm && \
@@ -39,6 +32,9 @@ RUN pacman -Sy --noconfirm && \
         subversion \
         && \
     find /var/cache/pacman/ -type f -delete
+
+# copy entrypoint script
+COPY --link entrypoint.sh /
 
 USER pkgbuilder
 ENTRYPOINT ["/entrypoint.sh"]
