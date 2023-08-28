@@ -6,7 +6,7 @@ IMAGE_TAG := latest
 all: build
 
 build:
-	docker build --pull --cache-from "$(IMAGE_NAME):latest" -t "$(IMAGE_NAME):$(IMAGE_TAG)" .
+	docker build --load --pull --cache-from "$(IMAGE_NAME):latest" -t "$(IMAGE_NAME):$(IMAGE_TAG)" .
 
 clean:
 	docker image rm "$(IMAGE_NAME):$(IMAGE_TAG)"
