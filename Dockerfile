@@ -7,7 +7,7 @@ RUN useradd -m -g wheel -s /bin/sh pkgbuilder && \
 
 # install git
 RUN pacman -Sy --noconfirm && \
-    pacman -S --noconfirm git
+    pacman -S --noconfirm git glibc
 
 # install yay
 USER pkgbuilder
