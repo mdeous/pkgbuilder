@@ -32,7 +32,9 @@ RUN pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
         archlinux-keyring \
         git \
+        glibc \
         mercurial \
+        namcap \
         subversion \
         && \
     find /var/cache/pacman/ -type f -delete

@@ -25,6 +25,8 @@ function build {
     fi
     # build package
     makepkg --clean --cleanbuild --force --noconfirm $@
+    # check package
+    namcap ./*.pkg.tar.zst
 }
 
 cmd="${1}"
