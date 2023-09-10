@@ -11,6 +11,8 @@ function build {
     done
     # update pacman cache
     sudo pacman -Syq
+    # update pacman keyring
+    sudo pacman -Sq --noconfirm archlinux-keyring
     # install dependencies
     yay -Sq --noconfirm $(\
         makepkg --printsrcinfo | \
