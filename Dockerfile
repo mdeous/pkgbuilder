@@ -19,17 +19,16 @@ ENV SRCINFO 0
 # set build folder
 WORKDIR /pkg
 
-# initialize pacman keyring
-RUN pacman-key --init
-
 # copy files from base stage
 COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/
 COPY --from=base --chown=pkgbuilder:wheel /home/pkgbuilder /home/pkgbuilder
 COPY --from=base /usr/sbin/yay /usr/sbin/
 
-# install dependencies for version-controlled packagees
-RUN pacman -Sy --noconfirm && \
+# install dependencies
+RUN pacman-key --init && \
+    pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
+        archlinux-keyring \
         git \
         mercurial \
         subversion \
