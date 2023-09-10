@@ -24,9 +24,11 @@ COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/
 COPY --from=base --chown=pkgbuilder:wheel /home/pkgbuilder /home/pkgbuilder
 COPY --from=base /usr/sbin/yay /usr/sbin/
 
+# initialize pacman keyring
+RUN pacman-key --init
+
 # install dependencies
-RUN pacman-key --init && \
-    pacman -Sy --noconfirm && \
+RUN pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
         archlinux-keyring \
         git \
