@@ -34,8 +34,8 @@ show the package `.SRCINFO` content, or to compute dependencies checksums.
 * If neither `build` nor `makepkg` is passed, the container will run the
 `build` command and pass all additional arguments to it.
 
-At the end of the execution, the built package will be analyzed with `namcap`
-and display the results.
+At the end of the execution, the built package will be analyzed with
+[`namcap`](https://wiki.archlinux.org/title/namcap) and display the results.
 
 Additionally, the `.SRCINFO` file for the package can be automatically
 generated with the built package by passing a `SRCINFO=1` environment
