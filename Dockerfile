@@ -19,6 +19,9 @@ ENV SRCINFO 0
 # set build folder
 WORKDIR /pkg
 
+# initialize pacman keyring
+RUN pacman-key --init
+
 # copy files from base stage
 COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/
 COPY --from=base --chown=pkgbuilder:wheel /home/pkgbuilder /home/pkgbuilder
