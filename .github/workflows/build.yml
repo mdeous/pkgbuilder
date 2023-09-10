@@ -61,6 +61,7 @@ jobs:
       
       - name: Upload image archive
         uses: actions/upload-artifact@v3
+        if: github.ref == 'refs/heads/main'
         with:
           name: pkgbuilder-image
           path: /tmp/image.tar
