@@ -40,6 +40,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          logout: true
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -76,6 +77,7 @@ jobs:
       contents: read
 
     strategy:
+      fail-fast: false
       matrix:
         registry:
           - ghcr.io
@@ -102,6 +104,7 @@ jobs:
           registry: ${{ matrix.registry }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets[matrix.secret] }}
+          logout: true
       
       - name: Tag image with latest tag
         run: docker tag ghcr.io/${IMAGE_NAME}:ci ${{ matrix.registry }}/${IMAGE_NAME}:latest
