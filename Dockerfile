@@ -7,8 +7,8 @@ RUN useradd -m -g wheel -s /bin/sh pkgbuilder && \
 # install yay
 RUN pacman -Sy --noconfirm
 USER pkgbuilder
-ADD --chown=pkgbuilder:wheel https://aur.archlinux.org/yay-bin.git#master /tmp/yay-bin/
-RUN cd /tmp/yay-bin && \
+ADD --chown=pkgbuilder:wheel https://aur.archlinux.org/yay.git#master /tmp/yay/
+RUN cd /tmp/yay && \
     makepkg -si --noconfirm
 
 FROM archlinux:base-devel
