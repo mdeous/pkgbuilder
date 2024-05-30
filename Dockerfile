@@ -35,6 +35,7 @@ RUN pacman -Sy --noconfirm && \
         glibc \
         mercurial \
         namcap \
+        pacman \
         subversion \
         && \
     find /var/cache/pacman/ -type f -delete
