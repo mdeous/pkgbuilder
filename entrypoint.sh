@@ -12,9 +12,9 @@ function build {
     # update pacman cache
     sudo pacman -Syq
     # update pacman keyring
-    sudo pacman -Sq --noconfirm archlinux-keyring
+    sudo pacman -Sq --noconfirm --needed archlinux-keyring
     # install dependencies
-    yay -Sq --noconfirm $(\
+    yay -Sq --noconfirm --needed $(\
         makepkg --printsrcinfo | \
         grep -E '\b(make)?depends' | \
         awk '{print $3}'\

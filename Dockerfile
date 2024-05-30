@@ -1,4 +1,4 @@
-FROM archlinux:base-devel as base
+FROM archlinux:base-devel AS base
 
 # create pkgbuilder user
 RUN useradd -m -g wheel -s /bin/sh pkgbuilder && \
@@ -29,7 +29,7 @@ RUN pacman-key --init
 
 # install dependencies
 RUN pacman -Sy --noconfirm && \
-    pacman -S --noconfirm \
+    pacman -S --needed --noconfirm \
         archlinux-keyring \
         git \
         glibc \
