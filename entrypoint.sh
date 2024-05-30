@@ -1,6 +1,10 @@
 #!/bin/bash
 
 function build {
+    # update pacman cache
+    sudo pacman -Syq
+    # update pacman keyring
+    sudo pacman -Sq --noconfirm --needed archlinux-keyring
     # install missing PGP keys
     for key in $(\
         makepkg --printsrcinfo | \
@@ -9,10 +13,6 @@ function build {
     ); do
         sudo pacman-key --recv-keys "${key}"
     done
-    # update pacman cache
-    sudo pacman -Syq
-    # update pacman keyring
-    sudo pacman -Sq --noconfirm --needed archlinux-keyring
     # install dependencies
     yay -Sq --noconfirm --needed $(\
         makepkg --printsrcinfo | \
