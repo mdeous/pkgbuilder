@@ -51,7 +51,7 @@ jobs:
         run: docker pull ghcr.io/${IMAGE_NAME}:latest || true
       
       - name: Build image
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v6.3.0
         with:
           pull: true
           push: false
