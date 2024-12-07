@@ -20,8 +20,8 @@ ENV SRCINFO 0
 WORKDIR /pkg
 
 # copy files from base stage
-COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/
 COPY --from=base --chown=pkgbuilder:wheel /home/pkgbuilder /home/pkgbuilder
+COPY --from=base /etc/group /etc/passwd /etc/sudoers /etc/shadow /etc/
 COPY --from=base /usr/sbin/yay /usr/sbin/
 
 # initialize pacman keyring
