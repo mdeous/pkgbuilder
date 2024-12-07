@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SRCINFO="${SRCINFO:-0}"
+CLEANUP="${CLEANUP:-1}"
+
 function build {
     # update pacman cache
     sudo pacman -Syq
@@ -24,7 +27,11 @@ function build {
         makepkg --printsrcinfo > .SRCINFO
     fi
     # build package
-    makepkg --clean --cleanbuild --force --noconfirm $@
+    makepkg_args=(--cleanbuild --force --noconfirm)
+    if [ "${CLEANUP}" = "1" ]; then
+        makepkg_args+=(--clean)
+    fi
+    makepkg ${makepkg_args[@]} $@
     # check package
     namcap ./*.pkg.tar.zst
 }

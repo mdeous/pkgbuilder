@@ -14,7 +14,6 @@ RUN cd /tmp/yay && \
 FROM archlinux:base-devel
 ENV PKGDEST /pkg
 ENV SRCDEST /tmp
-ENV SRCINFO 0
 
 # set build folder
 WORKDIR /pkg
