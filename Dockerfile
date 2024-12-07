@@ -12,8 +12,8 @@ RUN cd /tmp/yay && \
     makepkg -si --noconfirm
 
 FROM archlinux:base-devel
-ENV PKGDEST /pkg
-ENV SRCDEST /tmp
+ENV PKGDEST=/pkg
+ENV SRCDEST=/tmp
 
 # set build folder
 WORKDIR /pkg
