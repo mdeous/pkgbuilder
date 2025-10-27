@@ -60,7 +60,7 @@ jobs:
           outputs: type=docker,dest=/tmp/image.tar
       
       - name: Upload image archive
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: github.ref == 'refs/heads/main'
         with:
           name: docker-image
