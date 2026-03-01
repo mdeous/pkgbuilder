@@ -32,10 +32,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       - name: Log into GitHub container registry
-        uses: docker/login-action@v3.4.0
+        uses: docker/login-action@v3.7.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -51,7 +51,7 @@ jobs:
         run: docker pull ghcr.io/${IMAGE_NAME}:latest || true
       
       - name: Build image
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           pull: true
           push: false
@@ -60,7 +60,7 @@ jobs:
           outputs: type=docker,dest=/tmp/image.tar
       
       - name: Upload image archive
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: github.ref == 'refs/heads/main'
         with:
           name: docker-image
@@ -99,7 +99,7 @@ jobs:
         run: docker load --input /tmp/image.tar
       
       - name: Log into Docker registry
-        uses: docker/login-action@v3.4.0
+        uses: docker/login-action@v3.7.0
         with:
           registry: ${{ matrix.registry }}
           username: ${{ github.repository_owner }}
