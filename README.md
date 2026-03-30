@@ -11,7 +11,7 @@ the package definition is not missing a dependency that might already be
 installed on the host.
 
 It can handle dependencies coming both from the official repositories and
-from AUR, as well as importing PGP keys listed in `validpgpkeys` .
+from AUR, as well as import PGP keys listed in `validpgpkeys` .
 
 ## Usage
 
@@ -33,14 +33,15 @@ remaining arguments to it. This can be useful to run `makepkg` commands
 that don't require dependencies to be installed, like for example to
 show the package `.SRCINFO` content, or to compute dependencies checksums.
 
-* If neither `build` nor `makepkg` is passed, the container will run the
+* If neither `build` nor `makepkg` are passed, the container will run the
 `build` command and pass all additional arguments to it.
 
 At the end of the execution, the built package will be analyzed with
-[`namcap`](https://wiki.archlinux.org/title/namcap) and display the results.
+[`namcap`](https://wiki.archlinux.org/title/namcap) and results are
+displayed.
 
 Additionally, the `.SRCINFO` file for the package can be automatically
-generated with the built package by passing a `SRCINFO=1` environment
+generated with the built package by passing `SRCINFO=1` as an environment
 variable to the container.
 
 ### Shell Alias
