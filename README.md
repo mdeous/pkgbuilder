@@ -5,8 +5,10 @@
 Docker based ArchLinux build environment.
 
 This image provides a build environment for ArchLinux packages. It is based
-on the official `archlinux:base-devel` image, and can be used for example to
-work on packages without having to install dependencies on the host system.
+on the official `archlinux:base-devel` image, and can be used to work on
+packages without having to install dependencies on the host system, ensuring
+the package definition is not missing a dependency that might already be
+installed on the host.
 
 It can handle dependencies coming both from the official repositories and
 from AUR, as well as importing PGP keys listed in `validpgpkeys` .
