@@ -65,6 +65,7 @@ jobs:
         with:
           name: docker-image
           path: /tmp/image.tar
+          retention-days: 1
 
   publish:
     name: Publish Image
